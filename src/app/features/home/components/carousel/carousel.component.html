@@ -1,0 +1,22 @@
+<div class="carousel">
+  <carousel-card *ngFor="let item of items"
+    class="carousel-card" [class]="item.css"
+    (click)="rodarCarousel(item)"
+  >
+    <!-- <img [src]="item.img" alt="" style="height: 310px;"> -->
+    <!-- <div class = "item-head"> -->
+    <!--   <p>{{ item.texto }}</p> -->
+    <!--   <hr> -->
+    <!-- </div> -->
+    <div class="container">
+      <img [src]="item.img" alt="" style="height: 40vh;">
+      <div class="overlay">
+        <div class="head">
+          <p>{{ item.texto }}</p>
+          <hr>
+        </div>
+      </div>
+    </div>
+  </carousel-card>
+</div>
+

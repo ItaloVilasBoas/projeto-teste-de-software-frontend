@@ -1,0 +1,43 @@
+<mat-grid-list cols="2" rowHeight="100px">
+  <mat-grid-tile colspan="1" rowspan="2">
+    <div class="movies">
+      <div class="card-filme" [style.background] = "'url('+ data.itens[0].urlImage +')'"></div>
+      <div *ngFor="let item of data.itens.slice(1, 5)" class="card-filme rest"
+        [style]="{ background: 'url('+ item.urlImage +')', backgroundSize: 'contain' }">
+      </div>
+    </div>
+  </mat-grid-tile>
+  <mat-grid-tile colspan="1" rowspan="1">
+    <div class="informacoes-lista">
+      <span class="titulo-lista" (click)="irParaLista()">{{ data.nomeLista }}</span>
+      <div class="flex-space-between">
+        <div class="usuario" (click)="irParaPerfil()">
+          <div class="foto"
+            [style]="{ background: 'url('+ data.fotoUsuario +')', backgroundSize: 'cover' }">
+          </div>
+          <span>{{ data.nomeUsuario }}</span>
+        </div>
+        <div>
+          <span>{{ data.itens.length }} filmes</span>
+        </div>
+      </div>
+      <div class="flex-space-evenly">
+        <div class="flex-center">
+          <button mat-icon-button (click)="darLike()">
+            <mat-icon fontIcon="favorite" click></mat-icon>
+          </button>
+          <span>{{ data.quantidadeLikesLista }}</span>
+        </div>
+        <div class="flex-center">
+          <button mat-icon-button (click)="irParaLista()">
+            <mat-icon fontIcon="mode_comment"></mat-icon>
+          </button>
+          <span>{{ data.quantidadeComentariosLista }}</span>
+        </div>
+      </div>
+    </div>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    {{ data.descricaoLista }}
+  </mat-grid-tile>
+</mat-grid-list>

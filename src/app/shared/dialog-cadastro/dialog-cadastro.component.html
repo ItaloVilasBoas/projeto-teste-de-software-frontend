@@ -1,0 +1,64 @@
+<mat-card class="sign-up-card">
+  <mat-card-header>
+    <mat-card-title class="sign-up-card-title">
+      <svg xmlns="http://www.w3.org/2000/svg" width="6" height="39" viewBox="0 0 6 39" fill="none">
+        <path d="M3 0L3 39" stroke="#ACACAC" stroke-width="6"/>
+      </svg>
+      <span>MY MOVIE LIST</span>
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content class="sign-up-form">
+    <div class="form-container">
+      <h2>Cadastrar</h2>
+      <mat-label>Nome de Usuario</mat-label>
+      <mat-form-field>
+        <mat-label>Insira seu nome de usuario</mat-label>
+        <input matInput
+              [formControl]="nome"
+              (blur)="updateNomeErrorMessage()"
+              required>
+        @if (nome.invalid) {
+          <mat-error style="font-size: 10px;">{{ nomeErrorMessage }}</mat-error>
+        }
+      </mat-form-field>
+      <mat-label>Email</mat-label>
+      <mat-form-field>
+        <mat-label>Insira seu email</mat-label>
+        <input matInput
+              [formControl]="email"
+              (blur)="updateEmailErrorMessage()"
+              required>
+        @if (email.invalid) {
+          <mat-error style="font-size: 10px;">{{ emailErrorMessage }}</mat-error>
+        }
+      </mat-form-field>
+      <mat-label>Senha</mat-label>
+      <mat-form-field>
+        <mat-label>Insira sua senha</mat-label>
+        <input matInput type="password"
+              [formControl]="senha"
+              (blur)="updateSenhaErrorMessage()"
+              required>
+        @if (senha.invalid) {
+          <mat-error style="font-size: 10px;">{{ senhaErrorMessage }}</mat-error>
+        }
+      </mat-form-field>
+      <mat-label>Confirmar Senha</mat-label>
+      <mat-form-field>
+        <mat-label>Confirme sua senha</mat-label>
+        <input matInput type="password"
+              [formControl]="confirmaSenha"
+              (blur)="updateConfirmaSenhaErrorMessage()"
+              required>
+        @if (confirmaSenha.invalid) {
+          <mat-error style="font-size: 10px;">{{ confirmaSenhaErrorMessage }}</mat-error>
+        }
+      </mat-form-field>
+    </div>
+  </mat-card-content>
+  <mat-card-actions class="sign-up-actions">
+    <button id="btn-sign-up" class="sign-in-button" (click)="cadastrarUsuario()" mat-button>
+      CADASTRAR
+    </button>
+ </mat-card-actions>
+</mat-card>

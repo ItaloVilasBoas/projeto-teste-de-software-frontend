@@ -1,0 +1,84 @@
+<div class="banner" [style]="{
+  background: 'linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 1)), url('+ filme.urlImagemFundo +')',
+  backgroundSize: 'cover'
+ }"></div>
+<mat-grid-list cols="3" rowHeight="900px">
+  <mat-grid-tile colspan="1">
+    <div class="primeira-secao">
+      <div class="capa-filme">
+        <img [src]="filme.urlCapa" height="345px"
+          style="border-radius: 5px; box-shadow: inset 0 0 0 1px rgba(221, 238, 255, .1);">
+        <p>Duração: {{ filme.duracao }}</p>
+      </div>
+      <div class="centraliza-texto">
+        <button mat-flat-button (click)="adicionarFilme()">ADICIONAR FILME</button>
+      </div>
+      <br>
+      <div *ngIf="filme.assistaEm">
+        <mat-card class="onde-assistir">
+          <mat-card-header class="solid-border centraliza-texto">
+            <mat-card-title>ONDE ASSISTIR</mat-card-title>
+          </mat-card-header>
+          <mat-card-content class="solid-border" style="width: 230px; height: 300px; overflow: scroll">
+            <div *ngIf="filme.assistaEm.flatrate">
+              <p class="horizontal-line">STREAM</p>
+              <div *ngFor="let provider of filme.assistaEm.flatrate" class="centraliza-icone">
+                <img [src]="provider.logo_path" height="40px" [alt]="provider.provider_name + '_imagem'">
+                <span style="max-width: 100px;">{{ provider.provider_name }}</span>
+              </div>
+            </div>
+            <div *ngIf="filme.assistaEm.buy">
+              <p class="horizontal-line">COMPRAR</p>
+              <div *ngFor="let provider of filme.assistaEm.buy" class="centraliza-icone">
+                <img [src]="provider.logo_path" height="40px" [alt]="provider.provider_name + '_imagem'">
+                <span style="max-width: 100px;">{{ provider.provider_name }}</span>
+              </div>
+            </div>
+            <div *ngIf="filme.assistaEm.rent">
+              <p class="horizontal-line">ALUGAR</p>
+              <div *ngFor="let provider of filme.assistaEm.rent" class="centraliza-icone">
+                <img [src]="provider.logo_path" height="40px" [alt]="provider.provider_name + '_imagem'">
+                <span style="max-width: 100px;">{{ provider.provider_name }}</span>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </mat-grid-tile>
+  <mat-grid-tile colspan="2">
+    <div class="filme-info">
+      <div class="filme-header">
+        <h3>{{ filme.titulo }}</h3>
+        <p>{{ filme.descricao }}</p>
+      </div>
+      <header>
+        <ul class="abas-info-filme horizontal-line">
+          <li [class]="abaAtual == 'elenco' ? 'active' : ''" (click)="trocarAba('elenco')">ELENCO</li>
+          <li [class]="abaAtual == 'equipe' ? 'active' : ''" (click)="trocarAba('equipe')">EQUIPE</li>
+          <li [class]="abaAtual == 'detalhes' ? 'active' : ''" (click)="trocarAba('detalhes')">DETALHES</li>
+          <li [class]="abaAtual == 'generos' ? 'active' : ''" (click)="trocarAba('generos')">GENEROS</li>
+        </ul>
+      </header>
+      <div id="elenco-content" *ngIf="abaAtual == 'elenco'">
+        <p><a *ngFor="let elenco of filme.elencoPrincipal" class="info-box">
+          {{ elenco.nome }} - {{ elenco.personagem }}
+        </a></p>
+      </div>
+      <div id="equipe-content" *ngIf="abaAtual == 'equipe'">
+        <p><a *ngFor="let diretorOuEscritor of filme.diretoresEscritores" class="info-box">
+          {{ diretorOuEscritor.nome }} - {{ diretorOuEscritor.cargo }}
+        </a></p>
+      </div>
+      <div id="descricao-content" *ngIf="abaAtual == 'detalhes'" class="detalhes-box">
+        <p class="info-box">Data de Lançamento: {{ filme.dataLancamento}}</p>
+        <p class="info-box">Titulo Original: {{ filme.tituloOriginal }}</p>
+        <p class="info-box">Idioma Original: {{ filme.idiomaOriginal }}</p>
+        <p class="info-box">Situação: {{ filme.situacao }}</p>
+      </div>
+      <div id="generos-content" *ngIf="abaAtual == 'generos'">
+        <p><a *ngFor="let genero of filme.generos" class="info-box">{{ genero }}</a></p>
+      </div>
+    </div>
+  </mat-grid-tile>
+</mat-grid-list>

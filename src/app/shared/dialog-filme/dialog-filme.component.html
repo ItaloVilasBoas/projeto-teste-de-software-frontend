@@ -1,0 +1,25 @@
+<mat-card class="filme-card">
+  <img [src]="data.urlImage" width="95px" style="position: relative; bottom: 10px;">
+  <div>
+    <table cellspacing="0"><tr>
+      <td><mat-form-field class="example-full-width">
+        <mat-label>Status</mat-label>
+        <select matNativeControl required [(ngModel)]="data.status">
+          <option value="completo">Completo</option>
+          <option value="assistindo">Assistindo</option>
+          <option value="planeja-assistir">Planeja Assistir</option>
+        </select>
+      </mat-form-field></td>
+      <td><mat-form-field>
+        <mat-label>Score</mat-label>
+        <input matInput type="number" min="1" max="5" step=".1" [(ngModel)]="data.score">
+      </mat-form-field></td>
+      </tr>
+    </table>
+    <mat-form-field>
+      <mat-label>Comentários</mat-label>
+      <textarea matInput [(ngModel)]="data.comentario"></textarea>
+    </mat-form-field>
+    <button mat-button class="salvar" color="primary" (click)="salvar()">SALVAR</button>
+  </div>
+</mat-card>

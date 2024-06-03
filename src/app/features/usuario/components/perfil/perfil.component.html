@@ -1,0 +1,31 @@
+<!-- <mat-grid-list cols="4" rowHeight="1:1"> -->
+<!--   <mat-grid-tile colspan="1" style="overflow: visible;"> -->
+<!--     <div style="display: grid; height: 100%;"> -->
+<!--       <span class="titulo-area">FILMES FAVORITOS</span> -->
+<!--       <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 5px;"> -->
+<!--         <div *ngFor="let favorito of favoritos" class="card-filme" -->
+<!--           [style]="{ background: 'url('+ favorito.urlImage +')', backgroundSize: 'contain' }"> -->
+<!--         </div> -->
+<!--       </div> -->
+<!--     </div> -->
+<!--   </mat-grid-tile> -->
+<!--   <mat-grid-tile colspan="3"> -->
+<!--     <div style="display: grid; position: absolute; top: 0; width: 90%;"> -->
+<!--       <span class="titulo-area">ATIVIDADES RECENTES</span> -->
+<!--     </div> -->
+<!--   </mat-grid-tile> -->
+<!-- </mat-grid-list> -->
+<!---->
+<div style="display: grid; grid-template-columns: 1fr 1fr;">
+  <div style="display: grid; width: 35%;">
+    <span class="titulo-area">FILMES FAVORITOS</span>
+    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 5px;">
+      <div *ngFor="let favorito of favoritos" class="card-filme"
+        [style]="{ background: 'url('+ favorito.urlImage +')', backgroundSize: 'contain' }">
+      </div>
+    </div>
+  </div>
+  <div style="display: grid; width: 65%;">
+    <span class="titulo-area">ATIVIDADES RECENTES</span>
+  </div>
+</div>

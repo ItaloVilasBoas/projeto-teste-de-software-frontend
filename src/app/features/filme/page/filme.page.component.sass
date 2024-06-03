@@ -1,0 +1,80 @@
+$separator-color: #ccc
+$separator-spacing: 10px
+
+.abas-info-filme
+  display: flex
+  height: 70px
+  width: 80%
+  align-items: center
+  justify-content: center
+  overflow: auto
+
+.banner
+  position: relative
+  width: 100%
+  height: 477px
+  margin-bottom: -430px
+
+.active
+  font-weight: 700
+
+ul
+  display: flex
+  list-style-type: none
+  margin: 0
+  padding: 0
+  overflow: hidden
+
+ul.abas-info-filme
+  list-style-type: none
+  margin: 0
+  padding: 0
+  li
+    display: inline-block
+    margin-right: $separator-spacing
+    &::after
+      content: "\00B7\00B7\00B7"
+      margin-left: $separator-spacing
+      color: $separator-color
+    &:last-child::after
+      content: none
+    &:not(.active):hover
+      cursor: pointer
+
+.horizontal-line
+  border-bottom: 1px solid #456
+  text-align: center
+  letter-spacing: .075em
+  margin-bottom: 30px
+
+.info-box
+  // background: #283038
+  // background: #D4AF37
+  background: #a89984
+  border-radius: 3px
+  box-shadow: inset 0 1px 0 hsla(0,0%,100%,.05)
+  color: #fff
+  display: inline-block
+  line-height: 1.5
+  padding: 3px 6px
+  white-space: nowrap
+  margin-right: 8px
+  margin-bottom: 8px
+
+.detalhes-box
+  display: grid
+  justify-items: start
+
+.solid-border
+  border: 1px solid
+
+.centraliza-icone
+  display: grid
+  grid-template-columns: 1fr 1fr
+  align-items: center
+  margin-bottom: 15px
+
+.centraliza-texto
+  display: grid
+  justify-content: center
+

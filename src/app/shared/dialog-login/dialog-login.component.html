@@ -1,0 +1,51 @@
+<mat-card class="login-card">
+  <mat-card-header>
+    <mat-card-title class="login-card-title">
+      <svg xmlns="http://www.w3.org/2000/svg" width="6" height="39" viewBox="0 0 6 39" fill="none">
+        <path d="M3 0L3 39" stroke="#ACACAC" stroke-width="6"/>
+      </svg>
+      <span>MY MOVIE LIST</span>
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content class="login-form">
+    <div class="form-container">
+      <h3>Entrar</h3>
+      <p>Entre com suas credencias para acessar sua conta</p>
+      <mat-label>Email</mat-label>
+      <mat-form-field>
+        <mat-label>Insira seu email</mat-label>
+        <input matInput
+              [formControl]="email"
+              (blur)="updateEmailErrorMessage()"
+              required>
+        @if (email.invalid) {
+          <mat-error>{{ emailErrorMessage }}</mat-error>
+        }
+      </mat-form-field>
+      <mat-label>Senha</mat-label>
+      <mat-form-field>
+        <mat-label>Insira sua senha</mat-label>
+        <input matInput
+              [formControl]="senha"
+              [type]="hide ? 'password' : 'text'"
+              (blur)="updateSenhaErrorMessage()"
+              required>
+        <button mat-icon-button matSuffix (click)="hide = !hide">
+          <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
+        @if (senha.invalid) {
+          <mat-error>{{ senhaErrorMessage }}</mat-error>
+        }
+      </mat-form-field>
+    </div>
+  </mat-card-content>
+  <mat-card-actions class="sign-in-actions">
+    <button id="btn-login" class="sign-in-button" (click)="fazerLogin()" mat-button>
+      LOGIN
+    </button>
+    <div class="forgot-password">
+      <span>Esqueceu sua senha? </span>
+      <a href="">Resetar senha</a>
+    </div>
+ </mat-card-actions>
+</mat-card>

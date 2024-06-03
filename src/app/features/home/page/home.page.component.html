@@ -1,0 +1,15 @@
+<div style="display: grid; justify-items: center;">
+  <carousel style="height: 52vh;" [items]="carousel"/>
+  <div class="popular-list">
+    <div class="separator">
+      <span>LISTAS POPULARES</span>
+      <span class="spacer"></span>
+      <a id="explore-more">EXPLORAR MAIS</a>
+    </div>
+    <hr>
+    <div class="popular-lists">
+      <popular-list *ngFor="let popular of listasPopulares" [data]="popular" />
+    </div>
+  </div>
+</div>
+

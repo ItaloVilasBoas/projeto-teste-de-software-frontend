@@ -1,0 +1,80 @@
+$separator-color: #ccc
+$separator-spacing: 10px
+
+.banner
+  position: relative
+  width: 100%
+  height: 477px
+
+.info-perfil
+  display: flex
+  font-family: Poppins
+
+.foto-perfil
+  border-radius: 99px
+  height: 198px
+  width: 198px
+  transform: translateY(-50%) translateX(25%)
+
+.nome-usuario
+  font-weight: 700
+  transform: translateY(-10%) translateX(100%)
+
+.status-bar
+  display: flex
+  width: 341px
+  height: 23px
+  justify-self: end
+  position: absolute
+  bottom: 0
+  right: 40px
+  z-index: 1
+
+.assistindo
+  background: #59B4C3
+  height: 100%
+
+.completo
+  background: #332941
+  height: 100%
+
+.planeja-assistir
+  background: #864AF9
+  height: 100%
+
+ul
+  list-style-type: none
+  margin: 0
+  padding: 0
+  overflow: hidden
+
+li:not(.active) :hover
+    color: grey
+    cursor: pointer
+    font-weight: 700
+
+.active
+  font-weight: 700
+
+.horizontal-list
+  display: flex
+  height: 70px
+  width: 80%
+  align-items: center
+  justify-content: center
+  overflow: auto
+
+ul.horizontal-list
+  list-style-type: none
+  margin: 0
+  padding: 0
+  li
+    display: inline-block
+    margin-right: $separator-spacing
+    &::after
+      content: "\00B7\00B7\00B7"
+      margin-left: $separator-spacing
+      color: $separator-color
+    &:last-child::after
+      content: none
+
