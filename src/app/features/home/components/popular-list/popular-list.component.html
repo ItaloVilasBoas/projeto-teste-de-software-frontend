@@ -3,7 +3,7 @@
     <div class="movies">
       <div class="card-filme" [style.background] = "'url('+ data.itens[0].urlImage +')'"></div>
       <div *ngFor="let item of data.itens.slice(1, 5)" class="card-filme rest"
-        [style]="{ background: 'url('+ item.urlImage +')', backgroundSize: 'contain' }">
+        [style]="{ background: 'url('+ item.urlImage +')', backgroundSize: 'cover' }">
       </div>
     </div>
   </mat-grid-tile>

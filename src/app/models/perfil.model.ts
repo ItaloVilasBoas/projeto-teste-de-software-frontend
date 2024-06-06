@@ -8,6 +8,12 @@ export interface Perfil{
   headerPerfil: string,
   listaAtividades: [],
   listaFilmes: ItemFilme[],
-  listaMovieList: MovieList[],
+  listaMovieList: ParMovieList[],
   rede: number[]
 }
+
+export interface ParMovieList {
+  first: number,
+  second: MovieList
+}
+

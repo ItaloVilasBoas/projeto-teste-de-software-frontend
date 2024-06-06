@@ -60,4 +60,13 @@ export class AuthService {
     }
     return false
   }
+
+  clear(): boolean {
+    if(this.storage) {
+      this.storage.removeItem('token')
+      this.storage.removeItem('nomeUsuario')
+      this.storage.removeItem('idUsuario')
+    }
+    return false
+  }
 }

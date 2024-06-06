@@ -14,6 +14,10 @@ import { DialogFilmeComponent } from '../../../../shared/dialog-filme/dialog-fil
 import { MatDialog } from '@angular/material/dialog';
 import { ListaService } from '../../../../services/lista.service';
 import { DialogConfirmacaoComponent } from '../../../../shared/dialog-confirmacao/dialog-confirmacao.component';
+import { FilmeStore } from '../../../../store/filmes/filmes.reducer';
+import { Store, select } from '@ngrx/store';
+import { remove, save } from '../../../../store/filmes/filmes.action';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-lista',
@@ -23,26 +27,41 @@ import { DialogConfirmacaoComponent } from '../../../../shared/dialog-confirmaca
   styleUrl: './lista.component.sass'
 })
 export class ListaComponent {
+  idMovieList: number | undefined
   movieList!: MovieList
   listaPertenceUsuarioAtual = false
 
   constructor(private sharedDataService: SharedDataService,
+              private _snackBar: MatSnackBar,
+              private store: Store<FilmeStore>,
               private router: Router,
               private dialog: MatDialog,
               private listaService: ListaService,
               private authService: AuthService) {
     this.sharedDataService.data$
       .pipe(takeUntilDestroyed())
-      .subscribe(data => this.movieList = data!)
-    if(this.authService.getNomeUsuarioAtual())
+      .subscribe(data => {
+        const { first, second } = 'first' in data! ? data : { first: undefined, second: data! }
+        this.idMovieList = first
+        this.movieList = second
+      })
+
+    if(this.authService.getNomeUsuarioAtual()) {
       this.listaPertenceUsuarioAtual = this.router.url.includes(this.authService.getNomeUsuarioAtual()!)
+      if(this.ehListaPadrao(this.movieList.titulo)) {
+        this.store.pipe(select('filmes'), takeUntilDestroyed()).subscribe((store: any) => {
+          const mapIds = this.movieList.itens.map(f => f.idTmdb)
+          this.movieList.itens = store.filmes.filter((f: ItemFilme) => mapIds.includes(f.idTmdb))
+        })
+      }
+    }
   }
 
-  abrirDialogConfirmacao(itemMenu: any) {
+  abrirDialogConfirmacao(itemFilme: any) {
     this.dialog.open(DialogConfirmacaoComponent, {
         data: {
           titulo: 'Remover Filme',
-          mensagem: `Tem certeza que deseja remover ${itemMenu.nomeTmdb}?`
+          mensagem: `Tem certeza que deseja remover ${itemFilme.nomeTmdb}?`
         }
       })
       .afterClosed().subscribe(confirma => {
@@ -50,31 +69,34 @@ export class ListaComponent {
           let token = this.authService.getToken()
           let idPerfil = this.authService.getIdUsuarioAtual()
           if(idPerfil && token) {
-            this.listaService.removerFilme(idPerfil, token, itemMenu.idTmdb).subscribe({
-              next: res => console.log(res),
-              error: err => console.log(err)
+            this.listaService.removerFilme(idPerfil, token, itemFilme.idTmdb).subscribe({
+              next: _ => this.store.dispatch(remove(itemFilme)),
+              error: _ => this._snackBar.open('Não foi possível realizar essa operação. Por favor, tente novamente', 'Ok')
             })
           }
         }
       })
   }
 
-  abrirDialogFilme(itemMenu: any) {
+  abrirDialogFilme(itemFilme: any) {
     this.dialog.open(DialogFilmeComponent, {
       data: {
-        idTmdb: itemMenu.idTmdb,
-        nomeTmdb: itemMenu.nomeTmdb,
-        status: itemMenu.status,
-        score: itemMenu.score,
-        comentario: itemMenu.comentario,
-        favorito: itemMenu.favorito,
-        urlImage: itemMenu.urlImage
+        idTmdb: itemFilme.idTmdb,
+        nomeTmdb: itemFilme.nomeTmdb,
+        status: itemFilme.status,
+        score: itemFilme.score,
+        comentario: itemFilme.comentario,
+        favorito: itemFilme.favorito,
+        urlImage: itemFilme.urlImage
       }
     })
-    // .afterClosed(sucesso => {
-    //   if(sucesso)
-    //
-    // })
+    .afterClosed().subscribe(itemEditado => {
+      if(itemEditado) {
+        this.store.dispatch(save(itemEditado))
+        if(itemEditado.status != itemFilme.status)
+          this.movieList.itens = this.movieList.itens.filter(f => f.idTmdb != itemEditado.idTmdb)
+      }
+    })
   }
 
   irParaPaginaFilme(id: number) {
@@ -96,7 +118,36 @@ export class ListaComponent {
     return 100 - ((item.score - Math.floor(item.score)) * 100)
   }
 
-  naoEhListaPadrao(titulo: string) {
-    return !['Completos', 'Assistindo', 'Planeja Assistir'].includes(titulo)
+  ehListaPadrao(titulo: string) {
+    return ['Completos', 'Assistindo', 'Planeja Assistir'].includes(titulo)
+  }
+
+  abrirDialogConfirmacaoExcluirLista() {
+    this.dialog.open(DialogConfirmacaoComponent, {
+        data: {
+          titulo: 'Remover Lista',
+          mensagem: `Tem certeza que deseja excluir ${this.movieList.titulo}? essa ação não pode ser desfeita`
+        }
+      })
+      .afterClosed().subscribe(confirma => {
+        if(confirma) {
+          let token = this.authService.getToken()
+          if(token && this.idMovieList) {
+            this.listaService.excluirLista(this.idMovieList, token).subscribe({
+              next: () => {
+                this.router.navigate([`/u/${this.authService.getNomeUsuarioAtual()}`])
+                  .then(() => window.location.reload())
+              },
+              error: _ => this._snackBar.open('Não foi possível realizar essa operação. Por favor, tente novamente', 'Ok')
+            })
+          }
+        }
+      })
+  }
+
+  editarLista() {
+    this.sharedDataService.setDataEditar({ first: this.idMovieList, second: this.movieList })
+    this.router.navigate([`/u/${this.authService.getNomeUsuarioAtual()}/lista`])
   }
 }
+

@@ -12,6 +12,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { ListaService } from '../../services/lista.service';
 import { AuthService } from '../../services/auth.services';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-dialog-filme',
@@ -20,6 +21,7 @@ import { AuthService } from '../../services/auth.services';
     CommonModule,
     MatCardModule,
     MatFormFieldModule,
+    MatIconModule,
     MatInputModule,
     MatSelectModule,
     MatButtonModule,
@@ -32,6 +34,7 @@ import { AuthService } from '../../services/auth.services';
 })
 export class DialogFilmeComponent {
   constructor(@Inject(MAT_DIALOG_DATA) public data: ItemFilme,
+              private _snackBar: MatSnackBar,
               private listaService: ListaService,
               private authService: AuthService,
               private dialogRef: MatDialogRef<DialogFilmeComponent>) { }
@@ -41,8 +44,8 @@ export class DialogFilmeComponent {
     let token = this.authService.getToken()
     if(idPerfil && token) {
       this.listaService.adicionarFilme(idPerfil, token, this.data).subscribe({
-        next: _ => this.dialogRef.close(true),
-        error: err => console.log(err)
+        next: _ => this.dialogRef.close(this.data),
+        error: _ => this._snackBar.open('Não foi possível realizar essa operação. Por favor, tente novamente', 'Ok')
       })
     }
   }

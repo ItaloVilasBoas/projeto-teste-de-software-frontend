@@ -8,9 +8,10 @@ import { FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angu
 import { MatIconModule } from '@angular/material/icon';
 import { UsuarioService } from '../../services/usuario.service';
 import { AuthService } from '../../services/auth.services';
-import { Router } from '@angular/router'
 import { PerfilService } from '../../services/perfil.service';
 import { MatDialogRef } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-dialog-login',
@@ -35,18 +36,11 @@ export class DialogLoginComponent {
   senhaErrorMessage = '';
   hide = true
 
-  constructor(private router: Router,
-              private usuarioService: UsuarioService,
+  constructor(private usuarioService: UsuarioService,
               private authService: AuthService,
+              private _snackBar: MatSnackBar,
               private perfilService: PerfilService,
-              private dialogRef: MatDialogRef<DialogLoginComponent>) {
-    // merge(this.email.statusChanges, this.email.valueChanges)
-    //   .pipe(takeUntilDestroyed())
-    //   .subscribe(() => this.updateEmailErrorMessage())
-    // merge(this.senha.statusChanges, this.senha.valueChanges)
-    //   .pipe(takeUntilDestroyed())
-    //   .subscribe(() => this.updateSenhaErrorMessage())
-  }
+              private dialogRef: MatDialogRef<DialogLoginComponent>) { }
 
   updateEmailErrorMessage() {
     this.emailErrorMessage = '';
@@ -63,20 +57,21 @@ export class DialogLoginComponent {
   }
 
   fazerLogin() {
-    this.usuarioService
-      .validarLogin(this.email.value!, this.senha.value!)
+    this.usuarioService.validarLogin(this.email.value!, this.senha.value!)
+      .pipe(switchMap((token: string) => {
+        this.authService.setToken(token);
+        return this.perfilService.encontrarPerfilAtual(token)
+      }))
       .subscribe({
-        next: (token) => {
-          this.authService.setToken(token)
-          this.perfilService.encontrarPerfilAtual(token).subscribe(perfil => {
-            this.authService.setNomeUsuarioAtual(perfil.nomeUsuario)
-            this.authService.setIdUsuarioAtual(perfil.idPerfil)
-            this.router.navigate([`/u/${perfil.nomeUsuario}`])
-          })
+        next: perfil => {
+          this.authService.setNomeUsuarioAtual(perfil.nomeUsuario)
+          this.authService.setIdUsuarioAtual(perfil.idPerfil)
+          window.location.reload()
           this.dialogRef.close(true)
         },
-        error: (err) => {
-          console.log(err)
+        error: err => {
+          let res = err.error ? JSON.parse(err.error) : err
+          this._snackBar.open(res.message, "Ok")
         }
       })
   }

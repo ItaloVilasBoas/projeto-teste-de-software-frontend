@@ -14,10 +14,17 @@
   </svg>
   <span class="titulo-site" (click)="navegarPaginaHome()">MyMovieList</span>
   <span class="spacer"></span>
-  <div *ngIf="logado == true; else naoLogado">
+  <div *ngIf="logado == true; else naoLogado" style="position: relative;">
     <button style="color: black;" (click)="navegarPaginaFilmes()" mat-button>FILMES</button>
     <button style="color: black;" (click)="navegarPaginaListas()" mat-button>LISTAS</button>
-    <button style="color: black;" (click)="navegarPerfil()" mat-button>PERFIL</button>
+    <button class="perfil" style="color: black;" (click)="navegarPerfil()" mat-button>
+      <span>PERFIL</span>
+      <mat-icon>keyboard_arrow_down</mat-icon>
+    </button>
+    <button class="logout" (click)="openLogoutConfiramacao()" mat-flat-button>
+      <span>SAIR</span>
+      <mat-icon >logout</mat-icon>
+    </button>
   </div>
   <ng-template #naoLogado>
     <button style="color: black;" (click)="openLoginDialog()" mat-button>ENTRAR</button>

@@ -3,6 +3,8 @@ import { CardCarousel } from '../types/card-carousel.type';
 import { CardService } from '../../../services/card.service';
 import { ListaPopularResponse } from '../../../models/lista-popular-response.interface';
 import { ListaService } from '../../../services/lista.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'home-page',
@@ -13,30 +15,33 @@ export class HomePageComponent {
   carousel: CardCarousel[] = []
   listasPopulares: ListaPopularResponse[] = []
 
-  constructor(private cardService: CardService, private listaService: ListaService){
+  constructor(private cardService: CardService,
+              private _snackBar: MatSnackBar,
+              private listaService: ListaService){
+    const positionCssClasses: Record<number, string> = {
+      0: 'actual',
+      1: 'next',
+      5: 'prev'
+    };
+
     this.cardService.mostrarFilmesPopulares()
+      .pipe(takeUntilDestroyed())
       .subscribe({
         next: (res) => {
-          res.slice(0, 6).forEach(
-            filme => {
-              this.carousel.push({
-                idFilme: filme.id,
-                pos: this.carousel.length,
-                img: filme.urlImagemFundo!,
-                css: this.carousel.length == 0 ? 'actual' :
-                    this.carousel.length == 1 ? 'next' :
-                    this.carousel.length == 5 ? 'prev' : 'hide',
-                texto: filme.titulo!
-              })
-            }
-          )
+          res.slice(0, 6).forEach(filme =>  {
+            this.carousel.push({
+              idFilme: filme.id,
+              pos: this.carousel.length,
+              img: filme.urlImagemFundo!,
+              css: positionCssClasses[this.carousel.length] || 'hide',
+              texto: filme.titulo!
+            });
+          });
         },
-        error: (err) => {
-
-        }
+        error: (_) => this._snackBar.open('Erro ao carregar os filmes populares', 'Fechar')
       })
-
     this.listaService.mostrarListasPopulares()
+      .pipe(takeUntilDestroyed())
       .subscribe({
         next: (res) => {
           this.listasPopulares = res
@@ -44,3 +49,4 @@ export class HomePageComponent {
       })
   }
 }
+

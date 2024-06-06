@@ -1,12 +1,12 @@
 <section style="display: grid;">
   <div class="banner" [style]="{
-        background: 'linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 1)), url('+ perfil.headerPerfil +')',
+        background: 'linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 1)), url('+ headerPerfil +')',
         backgroundSize: 'cover'
      }">
     <div class="status-bar">
-      <div class="assistindo" [style.width]="percentualCompleto+'%'"
+      <div class="assistindo" [style.width]="percentualAssistindo + '%'"
         [matTooltip]="'assistindo: ' + filmesAssistindo.length" matTooltipPosition="above"></div>
-      <div class="completo" [style.width]="percentualAssistindo + '%'"
+      <div class="completo" [style.width]="percentualCompleto + '%'"
         [matTooltip]="'terminou de assistir: ' + filmesCompletos.length" matTooltipPosition="above"></div>
       <div class="planeja-assistir" [style.width]="percentualPlanejaAssistir + '%'"
         [matTooltip]="'planeja assistir: ' + filmesPlanejaAssistir.length" matTooltipPosition="above"></div>
@@ -24,7 +24,7 @@
     <li *ngFor="let itemMenu of menuPerfil" [class]="itemMenu.ativo ? 'active' : ''">
       <a (click)="mudarAba(itemMenu)">{{ itemMenu.titulo }}</a>
     </li>
-    <li>
+    <li *ngIf="listaPertenceUsuarioAtual ">
       <mat-icon (click)="criarLista()" fontIcon="add_circle"></mat-icon>
     </li>
   </ul>

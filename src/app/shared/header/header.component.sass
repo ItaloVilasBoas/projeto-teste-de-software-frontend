@@ -3,6 +3,20 @@
   // padding: 0
   // box-sizing: border-box
   // font-family: "Poppins", sans-serif
+.perfil
+  flex-direction: row-reverse
+
+.perfil:hover + button
+  visibility: visible
+
+.logout
+  position: absolute
+  right: 0
+  top: 40px
+  visibility: hidden
+  z-index: 2
+  &:hover
+    visibility: visible
 
 .mat-toolbar
   font-family: "Poppins", sans-serif

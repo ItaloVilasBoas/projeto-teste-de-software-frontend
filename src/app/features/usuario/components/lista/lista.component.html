@@ -1,25 +1,27 @@
 <h4 class="titulo-area">{{ movieList.titulo }}</h4>
 <div style="margin-bottom: 50px;">{{ movieList.descricao }}</div>
-<!-- <ng-template [ngIf]="listaPertenceUsuarioAtual"> -->
-<!-- Botao Editar <lado esquerdo> -->
-<!-- Botao Remover <lado direito> -->
-<!-- <ng-template> -->
+<div *ngIf="listaPertenceUsuarioAtual && !ehListaPadrao(movieList.titulo)"
+    style="position: relative; bottom: 140px;">
+  <button mat-icon-button class="edit-button" (click)="editarLista()">
+    <mat-icon fontIcon="edit"></mat-icon>
+  </button>
+  <button mat-icon-button class="x-button" (click)="abrirDialogConfirmacaoExcluirLista()">
+    <mat-icon fontIcon="close"></mat-icon>
+  </button>
+</div>
+
 <div class="filmes">
   <div *ngFor="let item of movieList.itens" >
-    <ng-template [ngIf]="listaPertenceUsuarioAtual && temScore(item)">
-      <button mat-icon-button class="edit-button" (click)="abrirDialogFilme(item)">
-        <mat-icon fontIcon="edit" color="white"></mat-icon>
-      </button>
-    </ng-template>
-    <ng-template [ngIf]="listaPertenceUsuarioAtual && temScore(item)" >
-      <div style="position: relative;">
-        <button mat-icon-button class="x-button" (click)="abrirDialogConfirmacao(item)">
-          <mat-icon fontIcon="close" color="white"></mat-icon>
-        </button>
-      </div>
-    </ng-template>
     <div class="card-filme" (click)="irParaPaginaFilme(item.idTmdb)"
-      [style]="{ background: 'url('+item.urlImage +')', backgroundSize: 'contain' }">
+      [style]="{ background: 'url('+item.urlImage +')', backgroundSize: 'cover' }">
+    </div>
+    <div *ngIf="listaPertenceUsuarioAtual && ehListaPadrao(movieList.titulo)" class="acoes-filme">
+      <button mat-icon-button class="edit-button" (click)="abrirDialogFilme(item)">
+        <mat-icon fontIcon="edit"></mat-icon>
+      </button>
+      <button mat-icon-button class="x-button" (click)="abrirDialogConfirmacao(item)">
+        <mat-icon fontIcon="close"></mat-icon>
+      </button>
     </div>
     <ng-template [ngIf]="temScore(item)">
       <mat-icon *ngFor="let index of getArrayScore(item)" fontIcon="star"></mat-icon>
@@ -28,7 +30,7 @@
     </ng-template>
   </div>
 </div>
-<div *ngIf="naoEhListaPadrao(movieList.titulo)" style="display: grid; margin-top: 50px;">
+<div *ngIf="!ehListaPadrao(movieList.titulo)" style="display: grid; margin-top: 50px;">
   <span class="titulo-area">COMENTARIOS</span>
   <ng-template [ngIf]="movieList.comentarios.length == 0">
     <span style="justify-self: center;">Ainda não há comentários</span>

@@ -1,14 +1,21 @@
 <mat-card class="filme-card">
+  <mat-icon
+    class="favorito-toggle"
+    [style.color]="data.favorito ? 'black' : 'gray'"
+    (click)="data.favorito = !data.favorito"
+    aria-label="favorito"
+    fontIcon="favorite"
+    ></mat-icon>
   <img [src]="data.urlImage" width="95px" style="position: relative; bottom: 10px;">
   <div>
     <table cellspacing="0"><tr>
       <td><mat-form-field class="example-full-width">
         <mat-label>Status</mat-label>
-        <select matNativeControl required [(ngModel)]="data.status">
-          <option value="completo">Completo</option>
-          <option value="assistindo">Assistindo</option>
-          <option value="planeja-assistir">Planeja Assistir</option>
-        </select>
+        <mat-select [(ngModel)]="data.status" required>
+          <mat-option value="completo">Completo</mat-option>
+          <mat-option value="assistindo">Assistindo</mat-option>
+          <mat-option value="planeja-assistir">Planeja Assistir</mat-option>
+        </mat-select>
       </mat-form-field></td>
       <td><mat-form-field>
         <mat-label>Score</mat-label>
@@ -23,3 +30,4 @@
     <button mat-button class="salvar" color="primary" (click)="salvar()">SALVAR</button>
   </div>
 </mat-card>
+
