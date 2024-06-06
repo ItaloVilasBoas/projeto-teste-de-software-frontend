@@ -5,6 +5,7 @@ import { FilmePageComponent } from './page/filme.page.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatButtonModule } from '@angular/material/button';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @NgModule({
   declarations: [ FilmePageComponent ],
@@ -13,6 +14,7 @@ import { MatButtonModule } from '@angular/material/button';
     MatGridListModule,
     MatCardModule,
     MatButtonModule,
+    MatProgressBarModule,
     FilmeRoutingModule
   ],
   exports: [ FilmePageComponent ],

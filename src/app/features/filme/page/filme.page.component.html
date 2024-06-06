@@ -1,3 +1,4 @@
+<mat-progress-bar *ngIf="loading" mode="query"></mat-progress-bar>
 <div class="banner" [style]="{
   background: 'linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 1)), url('+ filme.urlImagemFundo +')',
   backgroundSize: 'cover'
@@ -6,13 +7,18 @@
   <mat-grid-tile colspan="1">
     <div class="primeira-secao">
       <div class="capa-filme">
-        <img [src]="filme.urlCapa" height="345px"
+        <img [src]="filme.urlCapa" height="345px" (load)="loading = false"
           style="border-radius: 5px; box-shadow: inset 0 0 0 1px rgba(221, 238, 255, .1);">
         <p>Duração: {{ filme.duracao }}</p>
       </div>
-      <div class="centraliza-texto">
-        <button mat-flat-button (click)="adicionarFilme()">ADICIONAR FILME</button>
+      <div class="centraliza-texto" *ngIf="filmeNaLista; else botaoAdicionarFilme">
+        <button mat-flat-button (click)="editarFilme()">EDITAR FILME</button>
       </div>
+      <ng-template #botaoAdicionarFilme>
+        <div class="centraliza-texto">
+          <button mat-flat-button (click)="adicionarFilme()">ADICIONAR FILME</button>
+        </div>
+      </ng-template>
       <br>
       <div *ngIf="filme.assistaEm">
         <mat-card class="onde-assistir">
