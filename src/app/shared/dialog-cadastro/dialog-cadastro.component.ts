@@ -11,6 +11,7 @@ import { ValidaSenhasIguais } from '../validators/confirma-senha.validator';
 import { UsuarioService } from '../../services/usuario.service';
 import { UsuarioRequest } from '../../models/usuario.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-dialog-cadastro',
@@ -40,6 +41,7 @@ export class DialogCadastroComponent {
   hide = true
 
   constructor(private usuarioService: UsuarioService,
+              private dialogRef: MatDialogRef<DialogCadastroComponent>,
               private _snackBar: MatSnackBar) {}
 
   updateNomeErrorMessage() {
@@ -82,7 +84,10 @@ export class DialogCadastroComponent {
       }
       this.usuarioService.cadastrarUsuario(usuario)
         .subscribe({
-          next: res => console.log(res),
+          next: res => {
+            this.dialogRef.close(true)
+            this._snackBar.open("Usuario cadastrado com sucesso!", "Ok")
+          },
           error: err => {
             let res = err.error ? JSON.parse(err.error) : err
             this._snackBar.open(res.message, "Ok")

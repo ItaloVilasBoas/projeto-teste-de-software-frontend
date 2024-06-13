@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { Atividade } from '../../../../models/atividade.interface';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-perfil',
@@ -20,7 +21,8 @@ export class PerfilComponent {
   favoritos: ItemMovieList[] = []
   atividades: Atividade[] = []
 
-  constructor(private sharedDataService: SharedDataService) {
+  constructor(private sharedDataService: SharedDataService,
+              private router: Router) {
     this.sharedDataService.data$
       .pipe(takeUntilDestroyed())
       .subscribe(data => {
@@ -75,6 +77,10 @@ export class PerfilComponent {
     }
 
     return ''
+  }
+
+  irParaPaginaFilme(id: number) {
+    this.router.navigate([`/f/${id}`])
   }
 
   converteTempoDataAcao(dataAcao: Date): string{

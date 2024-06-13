@@ -5,6 +5,7 @@ import { ListaPopularResponse } from '../../../models/lista-popular-response.int
 import { ListaService } from '../../../services/lista.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'home-page',
@@ -17,6 +18,7 @@ export class HomePageComponent {
 
   constructor(private cardService: CardService,
               private _snackBar: MatSnackBar,
+              private router: Router,
               private listaService: ListaService){
     const positionCssClasses: Record<number, string> = {
       0: 'actual',
@@ -44,9 +46,13 @@ export class HomePageComponent {
       .pipe(takeUntilDestroyed())
       .subscribe({
         next: (res) => {
-          this.listasPopulares = res
+          this.listasPopulares = res.slice(0, 4)
         }
       })
+  }
+
+  irParaExplorarMais() {
+    this.router.navigate([`listas-populares`])
   }
 }
 

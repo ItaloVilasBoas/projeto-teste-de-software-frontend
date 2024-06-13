@@ -23,12 +23,12 @@
       <div *ngIf="favoritos.length == 0" style="text-wrap: nowrap;">
         Não há filmes marcados como favorito
       </div>
-      <div *ngFor="let favorito of favoritos" class="card-filme"
+      <div *ngFor="let favorito of favoritos" (click)="irParaPaginaFilme(favorito.idTmdb)" class="card-filme"
         [style]="{ background: 'url('+ favorito.urlImage +')', backgroundSize: 'cover' }">
       </div>
     </div>
   </div>
-  <div style="display: grid; width: 65%;">
+  <div id="atividades-recentes">
     <span class="titulo-area">ATIVIDADES RECENTES</span>
     <div *ngIf="atividades.length == 0" style="text-wrap: nowrap;">
       Não há registro de atividade

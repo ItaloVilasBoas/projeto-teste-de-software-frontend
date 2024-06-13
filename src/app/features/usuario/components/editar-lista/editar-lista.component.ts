@@ -111,7 +111,8 @@ export class EditarListaComponent {
           this.router.navigate([`${url}/l/${slugify(this.data.titulo)}`])
             .then(() => window.location.reload())
         },
-        error: _ => this._snackBar.open('Não foi possível realizar essa operação. Por favor, tente novamente', 'Ok')
+        error: _ =>
+          this._snackBar.open('Não foi possível realizar essa operação. Por favor, tente novamente', 'Ok')
       })
     }
   }

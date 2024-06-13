@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { ListaService } from '../../../../services/lista.service';
 import { AuthService } from '../../../../services/auth.services';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { slugify } from '../../../usuario/composables/slugify';
 
 @Component({
   selector: 'popular-list',
@@ -23,7 +24,7 @@ export class PopularListComponent {
   }
 
   irParaLista() {
-    // this.router.navigate([''])
+    this.router.navigate([`/u/${this.data.nomeUsuario}/l/${slugify(this.data.nomeLista)}`])
   }
 
   darLike() {

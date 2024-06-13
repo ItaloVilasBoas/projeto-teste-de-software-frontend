@@ -1,0 +1,15 @@
+<section style="padding: 10%;">
+  <p class="titulo-area">RECOMENDAÇÕES BASEADAS EM FILMES ASSISTIDOS:</p>
+  <div *ngIf="recomendacoes.length == 0">
+    VOCÊ NÃO POSSUI FILMES SUFICIENTES PARA TER RECOMENDAÇÕES BASEADAS EM SEU PERFIL.
+  </div>
+  <div *ngFor="let recomendacao of recomendacoes" style="margin-bottom: 80px;">
+    <span>RECOMENDAÇÕES BASEADOS EM {{ recomendacao.first.toUpperCase() }}</span>
+    <div class="lista-filmes-recomendados">
+      <div class="card-filme" *ngFor="let filmeRecomendado of recomendacao.second"
+        (click)="navegarParaFilme(filmeRecomendado.id)"
+        [style]="{ background: 'url('+ filmeRecomendado.urlImagem +')', backgroundSize: 'cover' }">
+      </div>
+    </div>
+  </div>
+</section>

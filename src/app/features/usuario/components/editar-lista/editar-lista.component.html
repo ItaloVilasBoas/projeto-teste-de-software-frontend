@@ -1,22 +1,18 @@
 <div style="display: grid; justify-items: center;">
-  <button mat-stroked-button color="accent" class="salvar-lista-button"
-    (click)="salvarLista()">Salvar Lista</button>
+  <button mat-stroked-button id="salvar-lista" color="accent" class="salvar-lista-button" (click)="salvarLista()">Salvar
+    Lista</button>
   <div style="display: grid; width: 50%;">
-    <input class="editar-titulo-lista" placeholder="titulo da lista"
-      [formControl]="tituloLista" style="text-align: center;"
-      (blur)="updateTituloListaMessage()" required
-    >
+    <input id="editar-titulo" class="editar-titulo-lista" placeholder="titulo da lista" [formControl]="tituloLista"
+      style="text-align: center;" (blur)="updateTituloListaMessage()" required>
     @if (tituloLista.invalid) {
-      <mat-error>{{ tituloErrorMessage }}</mat-error>
+    <mat-error>{{ tituloErrorMessage }}</mat-error>
     }
     <br>
     <mat-form-field>
-      <textarea matInput placeholder="Descrição da lista"
-        [(ngModel)]="data.descricao"
-      ></textarea>
+      <textarea matInput placeholder="Descrição da lista" [(ngModel)]="data.descricao"></textarea>
     </mat-form-field>
   </div>
-  <input id="search-film" [formControl]="searchControl" placeholder="Adicione um filme">
+  <input id="search-film-lista" [formControl]="searchControl" placeholder="Adicione um filme">
   <div class="list">
     <ul id="resultado-search">
       <li *ngFor="let resultado of searchResultados" (click)="adicionarItem(resultado)">
@@ -25,14 +21,12 @@
     </ul>
   </div>
   <div class="filmes">
-    <div *ngFor="let item of data.itens" >
+    <div *ngFor="let item of data.itens">
       <button mat-icon-button class="x-button" (click)="removerItem(item)">
         <mat-icon fontIcon="close" color="white"></mat-icon>
       </button>
-      <div class="card-filme"
-          [style]="{ background: 'url('+item.urlImage +')', backgroundSize: 'cover' }">
+      <div class="card-filme" [style]="{ background: 'url('+item.urlImage +')', backgroundSize: 'cover' }">
       </div>
     </div>
   </div>
 </div>
-

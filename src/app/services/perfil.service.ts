@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { EnvVariables } from '../env';
 import { Perfil } from '../models/perfil.model';
+import { FilmesRecomendados } from '../models/recomendacoes.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,10 @@ export class PerfilService {
 
   httpOptions = {
     headers: new HttpHeaders({'Content-type': 'application/json'})
+  }
+
+  recomendarFilmes(idPerfil: number): Observable<FilmesRecomendados[]> {
+    return this.httpClient.get<FilmesRecomendados[]>(`${this.baseUrl}/${idPerfil}/recomendacoes`)
   }
 
   encontrarPerfilAtual(token: string): Observable<Perfil> {

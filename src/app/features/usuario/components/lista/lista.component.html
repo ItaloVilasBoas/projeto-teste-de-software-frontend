@@ -1,39 +1,62 @@
-<h4 class="titulo-area">{{ movieList.titulo }}</h4>
-<div style="margin-bottom: 50px;">{{ movieList.descricao }}</div>
-<div *ngIf="listaPertenceUsuarioAtual && !ehListaPadrao(movieList.titulo)"
-    style="position: relative; bottom: 140px;">
-  <button mat-icon-button class="edit-button" (click)="editarLista()">
-    <mat-icon fontIcon="edit"></mat-icon>
-  </button>
-  <button mat-icon-button class="x-button" (click)="abrirDialogConfirmacaoExcluirLista()">
-    <mat-icon fontIcon="close"></mat-icon>
-  </button>
-</div>
-
-<div class="filmes">
-  <div *ngFor="let item of movieList.itens" >
-    <div class="card-filme" (click)="irParaPaginaFilme(item.idTmdb)"
-      [style]="{ background: 'url('+item.urlImage +')', backgroundSize: 'cover' }">
-    </div>
-    <div *ngIf="listaPertenceUsuarioAtual && ehListaPadrao(movieList.titulo)" class="acoes-filme">
-      <button mat-icon-button class="edit-button" (click)="abrirDialogFilme(item)">
+<section *ngIf="movieList != undefined">
+  <div style="display: grid;">
+    <div *ngIf="listaPertenceUsuarioAtual && !ehListaPadrao(movieList.titulo)" style="position: relative;">
+      <button mat-icon-button class="edit-button" (click)="editarLista()" id="editar-lista">
         <mat-icon fontIcon="edit"></mat-icon>
       </button>
-      <button mat-icon-button class="x-button" (click)="abrirDialogConfirmacao(item)">
+      <button mat-icon-button class="x-button" (click)="abrirDialogConfirmacaoExcluirLista()" id="excluir-lista">
         <mat-icon fontIcon="close"></mat-icon>
       </button>
     </div>
-    <ng-template [ngIf]="temScore(item)">
-      <mat-icon *ngFor="let index of getArrayScore(item)" fontIcon="star"></mat-icon>
-      <mat-icon fontIcon="star"
-        [style.clipPath]="'inset(0 ' + tamanhoEstrelaCortada(item) + '%  0 0)'" ></mat-icon>
-    </ng-template>
+    <h4 class="titulo-area">{{ movieList.titulo }}</h4>
   </div>
-</div>
-<div *ngIf="!ehListaPadrao(movieList.titulo)" style="display: grid; margin-top: 50px;">
-  <span class="titulo-area">COMENTARIOS</span>
-  <ng-template [ngIf]="movieList.comentarios.length == 0">
-    <span style="justify-self: center;">Ainda não há comentários</span>
-  </ng-template>
-</div>
 
+  <div style="margin-bottom: 50px; max-width: 45rem;">{{ movieList.descricao }}</div>
+
+  <div class="filmes">
+    <div *ngFor="let item of movieList.itens">
+      <div class="card-filme" (click)="irParaPaginaFilme(item.idTmdb)"
+        [style]="{ background: 'url('+item.urlImage +')', backgroundSize: 'cover' }">
+      </div>
+      <div *ngIf="listaPertenceUsuarioAtual && ehListaPadrao(movieList.titulo)" class="acoes-filme">
+        <button mat-icon-button class="edit-button" (click)="abrirDialogFilme(item)">
+          <mat-icon fontIcon="edit"></mat-icon>
+        </button>
+        <button mat-icon-button class="x-button" (click)="abrirDialogConfirmacao(item)">
+          <mat-icon fontIcon="close"></mat-icon>
+        </button>
+      </div>
+      <ng-template [ngIf]="temScore(item)">
+        <mat-icon *ngFor="let index of getArrayScore(item)" fontIcon="star"></mat-icon>
+        <mat-icon fontIcon="star" [style.clipPath]="'inset(0 ' + tamanhoEstrelaCortada(item) + '%  0 0)'"></mat-icon>
+      </ng-template>
+    </div>
+  </div>
+  <div *ngIf="!ehListaPadrao(movieList.titulo)" style="display: grid; margin-top: 50px;">
+    <span style="display: flex; align-items: center; width: max-content;">
+      <button mat-icon-button (click)="darLike()">
+        <mat-icon fontIcon="favorite" click></mat-icon>
+      </button>
+      {{ movieList.likes.length }}
+      LIKES
+    </span>
+    <span class="titulo-area">COMENTARIOS</span>
+    <ng-template [ngIf]="movieList.comentarios.length == 0">
+      <span style="justify-self: center;">Ainda não há comentários, seja o primeiro a comentar: </span>
+    </ng-template>
+    <div *ngFor="let comentario of movieList.comentarios" style="margin-bottom: 20px;">
+      <div class="usuario" (click)="irParaPerfil(comentario.nomeUsuario)">
+        <div class="foto" [style]="{ background: 'url('+ comentario.fotoPerfil +')', backgroundSize: 'cover' }">
+        </div>
+        <span>{{ comentario.nomeUsuario }}</span>
+      </div>
+      {{ comentario.comentario }}
+    </div>
+    <mat-form-field class="comentarios">
+      <mat-label>Deixe um comentário</mat-label>
+      <textarea matInput [formControl]="comentario"></textarea>
+    </mat-form-field>
+    <button mat-flat-button [disabled]="!comentario.valid" (click)="adicionarComentario()">Comentar
+    </button>
+  </div>
+</section>

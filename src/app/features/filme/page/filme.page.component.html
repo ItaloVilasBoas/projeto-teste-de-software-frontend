@@ -12,11 +12,11 @@
         <p>Duração: {{ filme.duracao }}</p>
       </div>
       <div class="centraliza-texto" *ngIf="filmeNaLista; else botaoAdicionarFilme">
-        <button mat-flat-button (click)="editarFilme()">EDITAR FILME</button>
+        <button mat-flat-button id="editar-filme" (click)="editarFilme()">EDITAR FILME</button>
       </div>
       <ng-template #botaoAdicionarFilme>
         <div class="centraliza-texto">
-          <button mat-flat-button (click)="adicionarFilme()">ADICIONAR FILME</button>
+          <button mat-flat-button id="adicionar-filme" (click)="adicionarFilme()">ADICIONAR FILME</button>
         </div>
       </ng-template>
       <br>
@@ -55,7 +55,7 @@
   <mat-grid-tile colspan="2">
     <div class="filme-info">
       <div class="filme-header">
-        <h3>{{ filme.titulo }}</h3>
+        <h3 id="titulo-filme">{{ filme.titulo }}</h3>
         <p>{{ filme.descricao }}</p>
       </div>
       <header>
@@ -68,13 +68,13 @@
       </header>
       <div id="elenco-content" *ngIf="abaAtual == 'elenco'">
         <p><a *ngFor="let elenco of filme.elencoPrincipal" class="info-box">
-          {{ elenco.nome }} - {{ elenco.personagem }}
-        </a></p>
+            {{ elenco.nome }} - {{ elenco.personagem }}
+          </a></p>
       </div>
       <div id="equipe-content" *ngIf="abaAtual == 'equipe'">
         <p><a *ngFor="let diretorOuEscritor of filme.diretoresEscritores" class="info-box">
-          {{ diretorOuEscritor.nome }} - {{ diretorOuEscritor.cargo }}
-        </a></p>
+            {{ diretorOuEscritor.nome }} - {{ diretorOuEscritor.cargo }}
+          </a></p>
       </div>
       <div id="descricao-content" *ngIf="abaAtual == 'detalhes'" class="detalhes-box">
         <p class="info-box">Data de Lançamento: {{ filme.dataLancamento}}</p>

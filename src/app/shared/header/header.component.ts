@@ -120,15 +120,17 @@ export class HeaderComponent {
     this.router.navigate(['/'])
   }
 
-  navegarPaginaFilmes(): void {
-    this.router.navigate(['/filmes'])
+  navegarParaRecomendacoes(): void {
+    this.router.navigate(['/recomenda'])
   }
 
-  navegarPaginaListas(): void {
-    this.router.navigate(['/l/'])
+  navegarParaFeed(): void {
+    this.router.navigate(['/feed'])
   }
 
   navegarPerfil(): void {
-    this.router.navigate([`/u/${this.nomeUsuarioAual}`])
+    this.router.navigate([`/u/${this.nomeUsuarioAual}`]).then(() => {
+      window.location.reload()
+    })
   }
 }

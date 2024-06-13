@@ -1,7 +1,8 @@
-<section style="display: grid;">
+<section style="display: grid;" *ngIf="perfil != undefined">
   <div class="banner" [style]="{
         background: 'linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 1)), url('+ headerPerfil +')',
-        backgroundSize: 'cover'
+        backgroundSize: 'cover',
+        height: headerPerfil == '' ? '180px' : '477px'
      }">
     <div class="status-bar">
       <div class="assistindo" [style.width]="percentualAssistindo + '%'"
@@ -13,19 +14,17 @@
     </div>
   </div>
   <div class="info-perfil">
-    <div class="foto-perfil"
-      [style]="{ background: 'url('+ perfil.fotoPerfil +')', backgroundSize: 'cover' }"></div>
-    <span class="nome-usuario">{{ perfil.nomeUsuario }}</span>
-    <span>descricao_do_perfil_aqui</span>
+    <div class="foto-perfil" [style]="{ background: 'url('+ perfil.fotoPerfil +')', backgroundSize: 'cover' }"></div>
+    <span id="nome-usuario" class="nome-usuario">{{ perfil.nomeUsuario }}</span>
   </div>
 </section>
 <section style="display: flex; justify-content: center; margin-top: -40px;">
   <ul class="horizontal-list">
-    <li *ngFor="let itemMenu of menuPerfil" [class]="itemMenu.ativo ? 'active' : ''">
+    <li *ngFor="let itemMenu of menuPerfil" [class]="itemMenu.ativo ? 'active' : ''" [id]="idItemMenu(itemMenu.titulo)">
       <a (click)="mudarAba(itemMenu)">{{ itemMenu.titulo }}</a>
     </li>
     <li *ngIf="listaPertenceUsuarioAtual ">
-      <mat-icon (click)="criarLista()" fontIcon="add_circle"></mat-icon>
+      <mat-icon id="criar-lista" (click)="criarLista()" fontIcon="add_circle"></mat-icon>
     </li>
   </ul>
 </section>

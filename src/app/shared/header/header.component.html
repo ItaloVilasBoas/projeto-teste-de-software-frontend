@@ -1,34 +1,38 @@
 <mat-toolbar primary>
   <svg width="5%" height="100%" viewBox="0 0 342 344" fill="none" preserveAspectRatio="xMidYMid meet">
-    <path d="M139.414 212L205 146.414V212H139.414Z" fill="black" stroke="black" stroke-width="2"/>
-    <path d="M206.586 138L130 214.586V138H206.586Z" stroke="black" stroke-width="2"/>
-    <path d="M179.686 282.254L64.4059 281.854L121.846 224.414L179.686 282.254Z" stroke="black" stroke-width="2"/>
-    <circle cx="169" cy="58" r="58" fill="black"/>
-    <circle cx="169" cy="58" r="53" fill="black" stroke="white" stroke-width="2"/>
-    <path d="M235 126C235 130.971 230.971 135 226 135C221.029 135 217 130.971 217 126C217 121.029 221.029 117 226 117C230.971 117 235 121.029 235 126Z" fill="white" stroke="black" stroke-width="2"/>
-    <circle cx="51.5" cy="74.5" r="50.5" stroke="black" stroke-width="2"/>
-    <path d="M96 75C96 99.2799 75.8736 119 51 119C26.1264 119 6 99.2799 6 75C6 50.7201 26.1264 31 51 31C75.8736 31 96 50.7201 96 75Z" stroke="black" stroke-width="2"/>
-    <rect x="43" y="138" width="78" height="78" fill="black" stroke="black" stroke-width="2"/>
-    <rect x="209.5" y="163.5" width="59" height="20" stroke="black"/>
-    <path d="M273 173.5L324.75 134.962V212.038L273 173.5Z" fill="black"/>
+    <path d="M139.414 212L205 146.414V212H139.414Z" fill="black" stroke="black" stroke-width="2" />
+    <path d="M206.586 138L130 214.586V138H206.586Z" stroke="black" stroke-width="2" />
+    <path d="M179.686 282.254L64.4059 281.854L121.846 224.414L179.686 282.254Z" stroke="black" stroke-width="2" />
+    <circle cx="169" cy="58" r="58" fill="black" />
+    <circle cx="169" cy="58" r="53" fill="black" stroke="white" stroke-width="2" />
+    <path
+      d="M235 126C235 130.971 230.971 135 226 135C221.029 135 217 130.971 217 126C217 121.029 221.029 117 226 117C230.971 117 235 121.029 235 126Z"
+      fill="white" stroke="black" stroke-width="2" />
+    <circle cx="51.5" cy="74.5" r="50.5" stroke="black" stroke-width="2" />
+    <path
+      d="M96 75C96 99.2799 75.8736 119 51 119C26.1264 119 6 99.2799 6 75C6 50.7201 26.1264 31 51 31C75.8736 31 96 50.7201 96 75Z"
+      stroke="black" stroke-width="2" />
+    <rect x="43" y="138" width="78" height="78" fill="black" stroke="black" stroke-width="2" />
+    <rect x="209.5" y="163.5" width="59" height="20" stroke="black" />
+    <path d="M273 173.5L324.75 134.962V212.038L273 173.5Z" fill="black" />
   </svg>
   <span class="titulo-site" (click)="navegarPaginaHome()">MyMovieList</span>
   <span class="spacer"></span>
   <div *ngIf="logado == true; else naoLogado" style="position: relative;">
-    <button style="color: black;" (click)="navegarPaginaFilmes()" mat-button>FILMES</button>
-    <button style="color: black;" (click)="navegarPaginaListas()" mat-button>LISTAS</button>
-    <button class="perfil" style="color: black;" (click)="navegarPerfil()" mat-button>
+    <button style="color: black;" (click)="navegarParaRecomendacoes()" mat-button>VER RECOMENDAÇÕES</button>
+    <!-- <button style="color: black;" (click)="navegarParaFeed()" mat-button>FEED</button> -->
+    <button id="perfil" class="perfil" style="color: black;" (click)="navegarPerfil()" mat-button>
       <span>PERFIL</span>
       <mat-icon>keyboard_arrow_down</mat-icon>
     </button>
     <button class="logout" (click)="openLogoutConfiramacao()" mat-flat-button>
       <span>SAIR</span>
-      <mat-icon >logout</mat-icon>
+      <mat-icon>logout</mat-icon>
     </button>
   </div>
   <ng-template #naoLogado>
-    <button style="color: black;" (click)="openLoginDialog()" mat-button>ENTRAR</button>
-    <button style="color: black;" (click)="openCadastroDialog()" mat-button>CRIAR CONTA</button>
+    <button id="entrar" style="color: black;" (click)="openLoginDialog()" mat-button>ENTRAR</button>
+    <button id="cadastrar" style="color: black;" (click)="openCadastroDialog()" mat-button>CRIAR CONTA</button>
   </ng-template>
   <input id="search-film" type="text" [formControl]="searchControl">
   <div class="list">
@@ -42,4 +46,3 @@
     <mat-icon>search</mat-icon>
   </button>
 </mat-toolbar>
-

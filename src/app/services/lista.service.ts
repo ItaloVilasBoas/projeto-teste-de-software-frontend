@@ -5,6 +5,7 @@ import { ListaPopularResponse } from '../models/lista-popular-response.interface
 import { Observable } from 'rxjs';
 import { ItemFilme } from '../models/item-filme.interface';
 import { MovieList } from '../models/movielist.interface';
+import { ComentarioLista } from '../models/comentario-detalhe.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -53,6 +54,16 @@ export class ListaService {
 
   mostrarListasPopulares(): Observable<ListaPopularResponse[]> {
     return this.httpClient.get<ListaPopularResponse[]>(`${this.baseUrl}/populares`)
+  }
+
+  adicionarComentario(idLista: number, idPerfil: number, comentario: string, token: string): Observable<ComentarioLista> {
+    return this.httpClient.put<ComentarioLista>(`${this.baseUrl}/comentario/${idLista}`, {
+      idPerfil: idPerfil,
+      comentario: comentario
+    },
+    {
+      headers: { token: token },
+    })
   }
 
   adicionarLikeNaLista(idLista: number, idPerfil: number): Observable<string> {

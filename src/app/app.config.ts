@@ -7,7 +7,13 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import { provideState, provideStore } from '@ngrx/store';
 import { filmeReducer } from './store/filmes/filmes.reducer';
+import { redeReducer } from './store/rede/rede.reducer';
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideRouter(routes), provideClientHydration(), provideAnimationsAsync(), provideAnimationsAsync(), provideHttpClient(withFetch()), provideStore(), provideState({name: 'filmes', reducer: filmeReducer}),]
+  providers: [
+    provideRouter(routes), provideClientHydration(), provideAnimationsAsync(), provideAnimationsAsync(),
+    provideHttpClient(withFetch()), provideStore(),
+    provideState({name: 'filmes', reducer: filmeReducer}),
+    provideState({name: 'rede', reducer: redeReducer}),
+  ]
 };
